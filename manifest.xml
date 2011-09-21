@@ -1,0 +1,26 @@
+<package>
+  <description brief="youbot_hokuyo_application">
+
+     youbot_hokuyo_application
+
+  </description>
+  <author>pinaki</author>
+  <license>BSD</license>
+  <review status="unreviewed" notes=""/>
+  <url>http://ros.org/wiki/youbot_hokuyo_application</url>
+  <depend package="roscpp"/>
+  <depend package="nav_msgs"/>
+  <depend package="geometry_msgs"/>
+  <depend package="tf"/>
+  <depend package="trajectory_msgs"/>
+  <depend package="pcl"/>
+  <depend package="pcl_ros"/>
+  <depend package="brics_actuator"/>
+  <depend package="std_msgs"/>
+  <depend package="laser_assembler"/>
+  <depend package="angles"/>
+  <depend package="eigen"/>
+
+</package>
+
+
