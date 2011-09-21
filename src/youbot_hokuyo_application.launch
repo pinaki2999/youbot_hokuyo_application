@@ -1,11 +1,40 @@
 <launch>
 
-<node pkg="tf" type="static_transform_publisher" name="link1_broadcaster" args="0 -0.08 0.14 1.57 -1.57 0 /arm_link_4 /laser 1" />
+	<!-- load the robot description file -->
+	<!-- <param name="robot_description" command="cat '$(find youbot_model)/urdf/youbot.urdf'" /> -->
+	<param name="robot_description" command="$(find xacro)/xacro.py '$(find youbot_description)/robots/youbot.urdf.xacro'"/>
+		<!-- remap from="joint_states" to="youbot_state"/> -->
+	
+	<!-- start robot_state_publisher -->
+	<!--<node pkg="robot_state_publisher" type="state_publisher" name="robot_state_publisher" output="screen"/>-->
+	<node pkg="robot_state_publisher" type="state_publisher" name="robot_arm_state_publisher" output="screen">
+		<remap from="joint_states" to="arm_1/joint_states"/> 
+	</node>
 
-<node type="laser_scan_assembler" pkg="laser_assembler" name="hokuyo_scan_assembler">
-   <remap from="scan" to="scan"/>
-    <param name="max_scans" type="int" value="5000" />
-    <param name="ignore_laser_skew" type="bool" value="false" />
-    <param name="fixed_frame" type="string" value="base_link" />
-  </node>
+
+	<node pkg="robot_state_publisher" type="state_publisher" name="robot_base_state_publisher" output="screen">
+		<remap from="joint_states" to="base/joint_states"/> 
+	</node>
+
+	<!-- <node pkg="robot_state_publisher" type="state_publisher" name="robot_base_static_state_publisher" output="screen">
+		<remap from="joint_states" to="youbot_base_state"/> 
+	</node> -->
+
+
+	<!-- start the hokuyo node -->
+	<node type="hokuyo_node" pkg="hokuyo_node" name="hokuyo_node">  </node>
+
+
+	<!-- configure the transform for hokuyo -->
+	<node pkg="tf" type="static_transform_publisher" name="link1_broadcaster" args="0 -0.08 0.14 1.57 -1.57 0 /arm_link_4 /laser 1" />
+
+	<!-- start the scan assembler -->
+	<node type="laser_scan_assembler" pkg="laser_assembler" name="hokuyo_scan_assembler">
+	   <remap from="scan" to="scan"/>
+	    <param name="max_scans" type="int" value="5000" />
+	    <param name="ignore_laser_skew" type="bool" value="false" />
+	    <param name="fixed_frame" type="string" value="base_link" />
+	</node>
+
+
 </launch>
