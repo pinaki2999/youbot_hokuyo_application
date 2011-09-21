@@ -1,0 +1,27 @@
+Installation:
+
+==> Download and add the package in your ROS_PACKAGE_PATH
+
+==> open a terminal and enter the following command:
+	==> rosmake youbot_hokuyo_application	
+	
+To run the node:
+==> Use following commandds in the terminal
+	
+	#Start the youbot_oodl driver
+	==> roslaunch youbot_oodl  youbot_oodl_driver.launch 
+
+	#Execute the launch file to start other relevant nodes
+	==> roslaunch youbot_hokuyo_application youbot_hokuyo_application.launch
+
+	#Start the point cloud assembling node
+	==> rosrun youbot_hokuyo_application youbot_hokuyo_node 
+
+To visualize the formation of the pointclouds:
+
+# Start the ros visualization tool
+==> rosrun rviz rviz
+
+==> Use fixed-frame as "base_link"
+
+==> add a pointcloud visualizer subscribed to the topic, "youbot_hokuyo_assembled_cloud"
